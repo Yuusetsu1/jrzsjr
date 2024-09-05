@@ -17,6 +17,12 @@ public class LoginReqVo {
      * 密码
      */
     private String password;
-//    private String code;
-//    private String rkey;
+    /**
+     * 验证码
+     */
+    private String code;
+    /**
+     * 会话id
+     */
+    private String sessionId;
 }

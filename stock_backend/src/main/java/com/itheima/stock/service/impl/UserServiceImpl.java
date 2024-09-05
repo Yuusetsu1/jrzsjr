@@ -71,18 +71,31 @@ public class UserServiceImpl implements UserService {
         if (reqVo == null || StringUtils.isBlank(reqVo.getUsername()) || StringUtils.isBlank(reqVo.getPassword())) {
             return R.error(ResponseCode.USERNAME_OR_PASSWORD_ERROR);
         }
-        //根据用户名查询用户信息
+
+        //2.校验验证码和sessionId是否有效
+        if (StringUtils.isBlank(reqVo.getCode()) || StringUtils.isBlank(reqVo.getSessionId())){
+            return R.error(ResponseCode.DATA_ERROR);
+        }
+
+        String rCode= (String) redisTemplate.opsForValue().get(StockConstant.CHECK_PREFIX+reqVo.getSessionId());
+        //判断获取的验证码是否存在，以及是否与输入的验证码相同
+        if (StringUtils.isBlank(rCode) || ! rCode.equalsIgnoreCase(reqVo.getCode())) {
+            //验证码输入有误
+            return R.error(ResponseCode.CHECK_CODE_ERROR);
+        }
+        //4.根据账户名称去数据库查询获取用户信息
         SysUser dbUser = sysUserMapper.getUserByUserName(reqVo.getUsername());
-        //判断用户是否存在
-        if (dbUser == null || !passwordEncoder.matches(reqVo.getPassword(), dbUser.getPassword())) {
+        //5.判断数据库用户是否存在
+        if (dbUser==null) {
+            return R.error(ResponseCode.ACCOUNT_NOT_EXISTS);
+        }
+        //6.如果存在，则获取密文密码，然后传入的明文进行匹配,判断是否匹配成功
+        if (!passwordEncoder.matches(reqVo.getPassword(),dbUser.getPassword())) {
             return R.error(ResponseCode.USERNAME_OR_PASSWORD_ERROR);
         }
-        //构建响应相对
+        //7.正常响应
         LoginRespVo respVo = new LoginRespVo();
-//        respVo.setId(dbUser.getId());
-//        respVo.setNickName(dbUser.getNickName());
-        //我们发现respVo与dbUser下具有相同的属性，所以直接复制即可
-        BeanUtils.copyProperties(dbUser, respVo);
+        BeanUtils.copyProperties(dbUser,respVo);
         return R.ok(respVo);
     }
 

@@ -6,6 +6,7 @@ package com.itheima.stock.vo.resp;
  * @Description
  */
 public enum ResponseCode{
+
     ERROR(0,"操作失败"),
     SUCCESS(1,"操作成功"),
     DATA_ERROR(0,"参数异常"),
@@ -14,6 +15,7 @@ public enum ResponseCode{
     CHECK_CODE_ERROR(0,"验证码错误"),
     USERNAME_OR_PASSWORD_ERROR(0,"用户名或密码错误"),
     ACCOUNT_EXISTS_ERROR(0,"该账号已存在"),
+    ACCOUNT_NOT_EXISTS(0,"该账号不存在"),
     TOKEN_ERROR(2,"用户未登录，请先登录"),
     NOT_PERMISSION(3,"没有权限访问该资源"),
     OPERATION_MENU_PERMISSION_CATALOG_ERROR(0,"操作后的菜单类型是目录，所属菜单必须为默认顶级菜单或者目录"),
