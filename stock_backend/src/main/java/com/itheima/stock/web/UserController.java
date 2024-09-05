@@ -8,6 +8,8 @@ import com.itheima.stock.vo.resp.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api")
 public class UserController {
@@ -27,5 +29,14 @@ public class UserController {
     @PostMapping("/login")
     public R<LoginRespVo> login(@RequestBody LoginReqVo loginReqVo){
         return userService.login(loginReqVo);
+    }
+
+    /**
+     * 生成图片验证码
+     * @return
+     */
+    @GetMapping("/captcha")
+    public R<Map> getCaptchaCode(){
+        return userService.getCaptchaCode();
     }
 }
