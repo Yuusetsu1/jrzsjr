@@ -8,14 +8,8 @@ import com.itheima.stock.vo.resp.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * @author : itheima
- * @date : 2022/9/19 16:18
- * @description : 定义访问用户的服务接口
- */
 @RestController
 @RequestMapping("/api")
-//@CrossOrigin
 public class UserController {
 
     @Autowired
@@ -26,20 +20,12 @@ public class UserController {
      * @param userName
      * @return
      */
-    @GetMapping("/{userName}")
+    @GetMapping("/user/{userName}")
     public SysUser getUserByUserName(@PathVariable("userName") String userName){
         return userService.getUserByUserName(userName);
     }
-
-    /**
-     * 用户登录功能
-     * @param reqVo
-     * @return
-     */
     @PostMapping("/login")
-    public R<LoginRespVo> login(@RequestBody LoginReqVo reqVo){
-        return userService.login(reqVo);
+    public R<LoginRespVo> login(@RequestBody LoginReqVo loginReqVo){
+        return userService.login(loginReqVo);
     }
-
-
 }

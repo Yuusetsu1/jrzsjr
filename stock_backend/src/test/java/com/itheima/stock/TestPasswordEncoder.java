@@ -23,10 +23,10 @@ public class TestPasswordEncoder {
     public void testPasswordEncoder() {
         //明文密码
         String pwd="123456";
-        for (int i = 0; i < 10; i++) {
+      /*  for (int i = 0; i < 10; i++) {*/
             String encodePwd = passwordEncoder.encode(pwd);
             System.out.println(encodePwd);
-        }
+        /*}*/
     }
 
     /**
@@ -37,7 +37,7 @@ public class TestPasswordEncoder {
      */
     @Test
     public void testDecode() {
-        String encodePwd="$2a$10$kpngKp7J3q0vb1xfmzPYFOQzcWkU8YUrqNF6XpjimM7zG4l2ra9pi";
+        String encodePwd="$2a$10$OXtKMNWISfgze261TsVueeRR4m8tmztRNAifyMJCk1y3LyBf9JUnG";
         String pwd="123456";
         boolean isSuccess = passwordEncoder.matches(pwd, encodePwd);
         System.out.println(isSuccess?"匹配成功":"匹配失败");
